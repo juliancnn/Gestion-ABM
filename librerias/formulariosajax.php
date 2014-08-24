@@ -204,5 +204,82 @@ else if(isset($_POST["busquedaApunte"])){
 		$tamano = $_POST["cantidadpagina"]; 
  	querydb::apuntecaNoDevuelto($matricula, $desde, $hasta, $pagina, $tamano);
  }
+		/****************************************************************************************
+		*
+		*								       Academico
+		*
+		/****************************************************************************************/
+		
+/*------------------------------------		
+ *		Agrega Materias
+ * -----------------------------------*/
+else if(isset($_POST["materiaAgregar"])){
+	permiso();
+	echo querydb::AcademicoAddMateria($_POST['materia'],false);
+}
+/*------------------------------------		
+ *		Lista Materias
+ * -----------------------------------*/
+else if(isset($_POST["listarMateria"])){
+	$materia = "";
 	
+	if(isset($_POST["materia"]))
+		$materia = $_POST["materia"];
+	querydb::AcademicoListarMateria($materia);
+}
+/*------------------------------------		
+ *		Consulta bolsa de Materias de una matricula
+ * -----------------------------------*/
+else if(isset($_POST["rellenaMaterias"])){
+	$matricula = "";
+	
+	if(isset($_POST["matricula"]))
+		$matricula = $_POST["matricula"];
+	querydb::AcademicoBolsaMatricula($matricula);
+}
+/*------------------------------------		
+ *		Consulta bolsa de Materias (Todas las materias o una)
+ * -----------------------------------*/
+else if(isset($_POST["AcademicoMateriaBolsa"])){
+	if(!isset($_POST["materia"]))
+		querydb::AcademicoMateriaBolsa();
+	else 
+		querydb::AcademicoMateriaBolsa($_POST["materia"]);	
+}
+
+/*------------------------------------		
+ *		Genera una nueva bolsa de trabajo
+ * -----------------------------------*/
+else if(isset($_POST["bolzaUpdate"])){
+	$matricula = $_POST["matricula"];
+	$datos = json_decode($_POST["datos"]);
+	querydb::AcademicoBolsaActualizar($matricula, $datos);
+}
+/*------------------------------------		
+ *		Consulta Consultas de Materias de una matricula
+ * -----------------------------------*/
+else if(isset($_POST["rellenaMateriasConsulta"])){
+	$matricula = "";
+	
+	if(isset($_POST["matricula"]))
+		$matricula = $_POST["matricula"];
+	querydb::AcademicoConsultasMatricula($matricula);
+}
+/*------------------------------------		
+ *		Genera una nueva Consulta
+ * -----------------------------------*/
+else if(isset($_POST["academicoConsultaUpdate"])){
+	$matricula = $_POST["matricula"];
+	$datos = json_decode($_POST["datos"]);
+	querydb::AcademicoConsultaActualizar($matricula, $datos);
+}
+/*------------------------------------		
+ *		Consulta Consulta de Materias (Todas las materias o una)
+ * -----------------------------------*/
+else if(isset($_POST["AcademicoMateriaConsulta"])){
+	if(!isset($_POST["materia"]))
+		querydb::AcademicoMateriaConsulta();
+	else 
+		querydb::AcademicoMateriaConsulta($_POST["materia"]);	
+}
 ?>

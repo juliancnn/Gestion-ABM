@@ -218,7 +218,7 @@ class querydb{
 
 			
 			$consulta = 'INSERT INTO `gestionabm_apunteca_apunte`(`codigo_estante`,`codigo_numero`,`nombre`,`lugar`,`estado`, `agregado`)
-VALUES (UPPER("'.$estante.'"),'.$numero.',LOWER("'.$nombre.'"),'.$lugar.',0,  CURDATE());'; 
+VALUES (UPPER("'.$estante.'"),'.$numero.',LOWER("'.$nombre.'"),'.$lugar.','.APUNTECA_ENAPUNTECA.',  CURDATE());'; 
 	
 	
 			$id = self::consulta($consulta, TRUE);
@@ -266,7 +266,7 @@ VALUES (UPPER("'.$estante.'"),'.$numero.',LOWER("'.$nombre.'"),'.$lugar.',0,  CU
 						VALUES  (1, "'.$cometario.'", '.$idApunte.', '.$matricula.', CURDATE());';
 			$id = self::consulta($consulta, TRUE);
 			
-			$consulta =	'UPDATE gestionabm_apunteca_apunte SET estado=2 where id='.$idApunte.';';
+			$consulta =	'UPDATE gestionabm_apunteca_apunte SET estado='.APUNTECA_PRESTADO.' where id='.$idApunte.';';
 			self::consulta($consulta);
 						
 			
@@ -292,7 +292,7 @@ VALUES (UPPER("'.$estante.'"),'.$numero.',LOWER("'.$nombre.'"),'.$lugar.',0,  CU
 						VALUES  (0, "'.$cometario.'", '.$idApunte.', '.$lastRegistro[0]['persona_id'].',  CURDATE());';
 			$id = self::consulta($consulta, TRUE);
 			
-			$consulta =	'UPDATE gestionabm_apunteca_apunte SET estado=0 where id='.$idApunte.';';
+			$consulta =	'UPDATE gestionabm_apunteca_apunte SET estado='.APUNTECA_ENAPUNTECA.' where id='.$idApunte.';';
 			self::consulta($consulta);
 						
 			if($json)
@@ -425,7 +425,7 @@ VALUES (UPPER("'.$estante.'"),'.$numero.',LOWER("'.$nombre.'"),'.$lugar.',0,  CU
 						gestionabm_apunteca_registro as reg
 						join 
 						gestionabm_apunteca_apunte  as ap
-						on reg.apunte_id = ap.id and ap.estado != 0
+						on reg.apunte_id = ap.id and ap.estado != '.APUNTECA_ENAPUNTECA.'
 						join
 						gestionabm_persona_info as per
 						on 
@@ -440,7 +440,7 @@ VALUES (UPPER("'.$estante.'"),'.$numero.',LOWER("'.$nombre.'"),'.$lugar.',0,  CU
 						gestionabm_apunteca_registro as reg
 						join 
 						gestionabm_apunteca_apunte  as ap
-						on reg.apunte_id = ap.id and ap.estado = 2
+						on reg.apunte_id = ap.id and ap.estado = '.APUNTECA_PRESTADO.'
 						join
 						gestionabm_persona_info as per
 						on 
@@ -492,6 +492,247 @@ VALUES (UPPER("'.$estante.'"),'.$numero.',LOWER("'.$nombre.'"),'.$lugar.',0,  CU
 
 			return $resultado;	
 		}
+		/****************************************************************************************
+		 * 
+		 *
+		 *										ACADEMICo
+		 * 						
+		 *
+		/*****************************************************************************************/
 		
+		/*---------------------------------------------------------------------------------------		
+		 *								Agrega materia
+		 *---------------------------------------------------------------------------------------*/
+		public static function AcademicoAddMateria($materia, $json = true){
+			if($materia=="")
+				return "La materia no puede estar vacia";
+			$consulta = 'INSERT INTO `gestionabm_persona_materia` (`materia`) VALUES (LOWER("'.$materia.'"));';	
+			$id = self::consulta($consulta, TRUE);
+
+			if($json){
+				echo json_encode($id);
+			}
+			return $id;	
+	
+		}
+		
+		/*---------------------------------------------------------------------------------------		
+		 * 					Devuelve el array de materias
+		 *---------------------------------------------------------------------------------------*/
+		public static function AcademicoListarMateria($busqueda = "",$json = true){
+			$mysqli;
+			
+			$consulta = "select * from gestionabm_persona_materia ";
+			if($busqueda!="")
+				$consulta .= " where gestionabm_persona_materia.materia like \"%".$busqueda."%\" ";
+			$consulta .= " order by materia ASC;";
+			
+			$res = self::consulta($consulta);
+			$resultado = $res->fetch_all(MYSQLI_ASSOC);
+			
+			if($json){
+				echo json_encode($resultado);
+			}
+			return $resultado;	
+	
+		}		
+		
+		/*---------------------------------------------------------------------------------------		
+		 * 			Actualiza la bolza de trabajo de una matricula (Vacia y rellena)
+		 *---------------------------------------------------------------------------------------*/
+		public static function AcademicoBolsaActualizar($matricula, $datos){
+			$mysqli;
+						
+			/*Vacia la bolza*/
+			$consulta = 'DELETE FROM gestionABM_persona_da_bolsa WHERE dni = '.$matricula.';';
+			self::consulta($consulta);
+			/*Rellena las materias*/
+			
+			for($i=0;$i<((int)count($datos));$i++){
+				$materia = $datos[$i][0];
+				$precio = $datos[$i][1];
+				$comentario = $datos[$i][2];
+				$consulta = 'INSERT INTO gestionabm_persona_da_bolsa
+							(`comentario`,
+							`precio`,
+							`materia_id`,
+							`dni`)
+							VALUES
+							("'.$comentario.'",'.$precio.','.$materia.','.$matricula.');';
+							 self::consulta($consulta);
+			}
+			
+			
+
+			return;	
+	
+		}	
+		/*---------------------------------------------------------------------------------------		
+		 * 					Devuelve la bolza de una matricula
+		 *---------------------------------------------------------------------------------------*/
+		public static function AcademicoBolsaMatricula($matricula ,$json = true){
+			$mysqli;
+			
+			$consulta = 'SELECT 
+							dni,
+							id, materia,
+							precio, comentario
+							FROM 
+							abm.gestionabm_persona_materia as mat
+							join 
+							abm.gestionabm_persona_da_bolsa as bol
+							on
+							mat.id = bol.materia_id
+							and
+							dni='.$matricula.'
+							order by materia ASC;';
+			
+			$res = self::consulta($consulta);
+			$resultado = $res->fetch_all(MYSQLI_ASSOC);
+			
+			if($json){
+				echo json_encode($resultado);
+			}
+			return $resultado;	
+	
+		}	
+		/*---------------------------------------------------------------------------------------		
+		 * 					Devuelve la bolza de materia
+		 *---------------------------------------------------------------------------------------*/
+		public static function AcademicoMateriaBolsa($materia = "" ,$json = true){
+			$mysqli;
+			
+			$consulta = 'SELECT 
+							per.dni,
+							per.nombre nombre, 
+							apellido, 
+							celular, 
+							email,
+							mat.id,
+							materia,
+							precio, comentario
+							FROM 
+							gestionabm_persona_info as per
+							join
+							abm.gestionabm_persona_da_bolsa as bol
+							on
+							per.dni = bol.dni
+							join 
+							abm.gestionabm_persona_materia as mat
+							on
+							mat.id = bol.materia_id ';
+			if($materia!=""){
+				$consulta .= " and bol.materia_id=".$materia." ";
+			}
+			
+			$consulta .= ' order by materia ASC;';
+			$res = self::consulta($consulta);
+			$resultado = $res->fetch_all(MYSQLI_ASSOC);
+			
+			if($json){
+				echo json_encode($resultado);
+			}
+			return $resultado;	
+	
+		}	
+		/*---------------------------------------------------------------------------------------		
+		 * 					Devuelve la Consulta de una matricula
+		 *---------------------------------------------------------------------------------------*/
+		public static function AcademicoConsultasMatricula($matricula ,$json = true){
+			$mysqli;
+			
+			$consulta = 'SELECT 
+							dni,
+							id, 
+							materia,
+							comentario
+							FROM 
+							abm.gestionabm_persona_materia as mat
+							join 
+							abm.gestionABM_persona_da_materia as cons
+							on
+							mat.id = cons.materia_id
+							and
+							dni='.$matricula.'							
+							order by materia ASC;';
+			
+			$res = self::consulta($consulta);
+			$resultado = $res->fetch_all(MYSQLI_ASSOC);
+			
+			if($json){
+				echo json_encode($resultado);
+			}
+			return $resultado;	
+	
+		}
+				
+		/*---------------------------------------------------------------------------------------		
+		 * 			Actualiza la bolza de trabajo de una matricula (Vacia y rellena)
+		 *---------------------------------------------------------------------------------------*/
+		public static function AcademicoConsultaActualizar($matricula, $datos){
+			$mysqli;
+						
+			/*Vacia la bolza*/
+			$consulta = 'DELETE FROM gestionabm_persona_da_materia WHERE dni = '.$matricula.';';
+			self::consulta($consulta);
+			/*Rellena las materias*/
+			
+			for($i=0;$i<((int)count($datos));$i++){
+				$materia = $datos[$i][0];
+				$comentario = $datos[$i][1];
+				$consulta = 'INSERT INTO gestionabm_persona_da_materia
+							(`comentario`,
+							`materia_id`,
+							`dni`)
+							VALUES
+							("'.$comentario.'",'.$materia.','.$matricula.');';
+							 self::consulta($consulta);
+			}
+			
+			
+
+			return;	
+	
+		}	
+		
+		/*---------------------------------------------------------------------------------------		
+		 * 					Devuelve la consulta de materia
+		 *---------------------------------------------------------------------------------------*/
+		public static function AcademicoMateriaConsulta($materia = "" ,$json = true){
+			$mysqli;
+			
+			$consulta = 'SELECT 
+							per.dni,
+							per.nombre nombre, 
+							apellido, 
+							celular, 
+							email,
+							mat.id,
+							materia,
+							comentario 
+							FROM 
+							gestionabm_persona_info as per 
+							join 
+							gestionabm_persona_da_materia as cons 
+							on 
+							per.dni = cons.dni 
+							join  
+							gestionabm_persona_materia as mat 
+							on 
+							mat.id = cons.materia_id ';
+			if($materia!=""){
+				$consulta .= " and cons.materia_id=".$materia." ";
+			}
+			
+			$consulta .= ' order by materia ASC;';
+			$res = self::consulta($consulta);
+			$resultado = $res->fetch_all(MYSQLI_ASSOC);
+			
+			if($json){
+				echo json_encode($resultado);
+			}
+			return $resultado;	
+	
+		}
 }
 ?>

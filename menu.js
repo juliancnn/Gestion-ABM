@@ -22,6 +22,9 @@ arrayMenu.push(['btn_apunteca_editar', "apunteca_editar.php","apunteca_editar.js
 arrayMenu.push(['btn_apunteca_noDev', "apunteca_buscar_registro.php", "librerias/jquery-ui-1.10.4.calendario.js", "apunteca_buscar_registro.js"]);
 arrayMenu.push(['btn_apunteca_reg', "apunteca_registro.php"]);
 
+arrayMenu.push(['btn_academico_materia', "academico_materias.php","academico_materias.js"]);
+arrayMenu.push(['btn_academico_bolsa', "academico_bolsa_update.php","academico_bolsa_update.js"]);
+arrayMenu.push(['btn_academico_consulta', "academico_personasConsulta_update.php","academico_personasConsulta_update.js"]);
 
 /***************************************************************
  * 
@@ -48,6 +51,7 @@ $(function(){
 ***************************************************************/
 function cargarContenidoUno(){
 	$(this).parent().parent().parent().parent().find( "li" ).removeClass('active');
+	$(this).parent().parent().parent().addClass('active');
 	var btnName = $(this).attr("id"); 
 	cargas = 0;
 	cargaToggle();

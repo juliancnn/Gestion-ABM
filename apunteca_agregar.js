@@ -26,6 +26,7 @@ function agregoApunte(datos){
 		    res ='<button type="button" class="close formulario" data-dismiss="alert">&times;</button>';
 		    res += 'Apunte agregado correctamente con id: <strong>'+datos+'</strong>';
             $("#resultado").addClass('alert alert-success');
+
 	}else{
 			$("#resultado").removeClass('alert alert-success');
 			res ='<button type="button" class="close formulario" data-dismiss="alert">&times;</button>';

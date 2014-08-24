@@ -24,25 +24,25 @@ permiso();
 	<div class="container" id="contenido">    
     	<div class="row"> <br></div>
         <div class="row center-block">
-            <div class="col-md-4"></div>
-            <div class="col-md-4">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h5 class="panel-title" align="center">Registro o actualizacion de personas</h5>
                   </div>
                   <div class="panel-body" align="center">
                     <form class="form-inline" role="form" id="formulario_persona">
-                    	 <input type="text" class="form-control formulario" id="matricula" placeholder="Matricula">
+                    	 <input type="text" class="form-control" id="matricula" placeholder="Matricula">
                          <br>
-						<input type="text" class="form-control formulario" id="nombre" placeholder="Nombre">
+						<input type="text" class="form-control" id="nombre" placeholder="Nombre">
                         <br>
-                         <input type="text" class="form-control formulario" id="apellido" placeholder="Apellido">
+                         <input type="text" class="form-control" id="apellido" placeholder="Apellido">
                         <br>
-                         <input type="text" class="form-control formulario" id="celular" placeholder="Celular (con codigo de area)">
+                         <input type="text" class="form-control" id="celular" placeholder="Celular (con codigo de area)">
                         <br>
-                         <input type="text" class="form-control formulario" id="email" placeholder="email">
+                         <input type="text" class="form-control" id="email" placeholder="email">
                         <br>
-						<select name="carrera" id="carrera" multiple class="form-control formulario">
+						<select name="carrera" id="carrera" multiple class="form-control">
 						  <?php
                             $arrayCarreras = querydb::arrayCarreras();
                             foreach($arrayCarreras as $fila){
@@ -58,13 +58,13 @@ permiso();
 					</form>
                     <br>
 					<div class="alert alert-success hide" id="resultado">
-						<button type="button" class="close formulario" data-dismiss="alert">&times;</button>
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
 						<strong>Registrado!</strong> <br> Los cambios fueron registrados correctamente.
 					</div>
                   </div>
                 </div>
             </div>
-            <div class="col-md-4"></div>
+            <div class="col-md-3"></div>
         </div>
 	</div>
     

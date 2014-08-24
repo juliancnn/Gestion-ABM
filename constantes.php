@@ -2,7 +2,7 @@
 session_start();
 include_once('permisos.php');
 
-/*Algunos parametros*/
+/*General*/
 const TITULO = 'ABM Gestion';
 const RAIZhttp = 'http://localhost/';
 $destinoLogin = '"index.php"';
@@ -11,8 +11,14 @@ $destinoLogin = '"index.php"';
 const VECES_INCORRECTO = 10;
 
 /* Permisos */
-const PER_BASICO = 0;
-const PER_APUNTECA = 1;
+const PER_SUPERUSUARIO = 0;
+const PER_BASICO = 1;
+const PER_APUNTECA = 2;
+const PER_ACADEMICO = 3;
+
+/* Apunteca */
+const APUNTECA_ENAPUNTECA = 1;
+const APUNTECA_PRESTADO = 2;
 
 /*HTML*/
 const PIEPAGINA = 

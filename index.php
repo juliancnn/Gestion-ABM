@@ -21,7 +21,9 @@ permiso();
 	<body>
 	<div class="container-fluid" id="menu_superior">    
 		<div class="nav nav-pills nav-justified">
+			<!-- Btn Inicio -->
 			<li class="active"><a href="#">Inicio</a></li>
+			<!-- Btn Personas -->
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Personas <span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu">
@@ -31,6 +33,7 @@ permiso();
 					<li><a id="btn_personas_lista" href="#">Listas email</a></li>
 				</ul>
 			</li>
+			<!-- Btn apunteca -->
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Apunteca <span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu">
@@ -45,7 +48,25 @@ permiso();
 
 				</ul>
 			</li>
-			<li class="disabled"><a href="#">Mi perfil</a></li>
+			<!-- Btn Academico -->
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Academico <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="#" id="btn_academico_materia">Materias</a></li>
+					<li><a id="btn_academico_bolsa" href="#">Bolsa</a></li>
+					<li><a id="btn_academico_consulta" href="#">Consultas</a></li>
+
+				</ul>
+			</li>
+			<!-- Btn Mi perfil -->
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Mi perfil<span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+					<li class="disabled"><a id="btn_usuario_change" href="#">Cambiar password</a></li>
+					<li class="divider"></li>
+					<li><a id="btn_usuario_salir" href="logout.php">Cerrar sesion</a></li>
+				</ul>
+			</li>
 		</div>
 		<div class="row" id="contenedorPrincipal">
 			<div class="col-md-12">Pagina Inicio</div>

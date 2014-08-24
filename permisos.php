@@ -1,7 +1,7 @@
 <?php
 include_once("librerias/querydb.php");
 
-function permiso($re = TRUE, $lugar = PER_BASICO){
+function permiso($re = TRUE, $permiso = PER_BASICO){
 	$per = FALSE;
 	
 	//Compruebo Loggeo
@@ -11,13 +11,20 @@ function permiso($re = TRUE, $lugar = PER_BASICO){
 		}
 		return FALSE;
 	}
-		 
+	/* ¿es superusuario?
+	if(PER_SUPERUSUARIO){
+		return TRUE;
+	}*/
 	
-	switch ($lugar) {
+	switch ($permiso) {
 	    case PER_BASICO:
 	        $per = TRUE;
 	        break;
 	    case PER_APUNTECA:
+			//Tendria que hacer la consulta a la db
+	        $per = TRUE;
+	        break;
+	    case PER_ACADEMICO:
 			//Tendria que hacer la consulta a la db
 	        $per = TRUE;
 	        break;

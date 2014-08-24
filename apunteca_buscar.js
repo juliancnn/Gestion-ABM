@@ -243,13 +243,13 @@ function verDetalles(){
 	}else{
 		bootbox.dialog({
 		  message: detallesHTML,
-		  title: "Detalles del apunte",
+		  title: '<span class="glyphicon glyphicon-book"></span>'+" Detalles del apunte",
 		  buttons: {
 		    btn_retirar: {
 		      label: "Retirar apunte",
 		      className: "btn-primary",
 		      callback: function() {
-					window.location="apunteca_retirar.php?id_apunte="+pullDeResultados[i]['id'];
+			      	window.location="apunteca_retirar.php?id_apunte="+pullDeResultados[i]['id'];
 		      }
 		    },
 		    btn_salir: {

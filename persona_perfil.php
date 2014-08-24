@@ -15,6 +15,9 @@ $perfil = $res[0];
 ----------------------------------------*/
 $apuntecaRegistro = querydb::apuntecaRegistro($matricula, "", 0,10000000, false);
 $apuntesNoDevueltos = querydb::apuntecaNoDevuelto($matricula, '', '', 0, 10000000, false);
+$bolsaRegistro = querydb::AcademicoBolsaMatricula($matricula, false);
+$consultaRegistro = querydb::AcademicoConsultasMatricula($matricula, false);
+
 
 
 ?>
@@ -114,6 +117,64 @@ $apuntesNoDevueltos = querydb::apuntecaNoDevuelto($matricula, '', '', 0, 1000000
 				                            ?>
 									  </tbody>
 								  </table>
+								</br></br></br>	
+
+							</p>
+						</div>
+						<div id="dRegistroBolza">
+
+							<p align="center"><strong>Bolza de trabajo</strong></p>
+							<p>
+								 <table class="table table-hover">
+									  <thead>
+									    <tr>
+									      <th>#</th>
+		   							      <th>Materia</th>
+									      <th>Precio</th>
+									      <th>Comentario</th>
+									    </tr>
+									  </thead>
+									  <tbody>
+									    	<?php
+									    	$i = 0;
+				                            foreach($bolsaRegistro as $fila){
+				                            	$i++;
+				                                echo '<tr><td>'.$i.'</td>'."\n";
+												echo '<td>'.$fila['materia'].'</td>'."\n";
+												echo '<td>'.$fila['precio'].'</td>'."\n";
+												echo '<td>'.$fila['comentario'].'</td></tr>'."\n";
+				                            }
+				                            ?>
+									  </tbody>
+								  </table>
+								  </br></br></br>
+							</p>
+						</div>
+						<div id="dRegistroConsultas">
+
+							<p align="center"><strong>Nos ayuda con las materias</strong></p>
+							<p>
+								 <table class="table table-hover">
+									  <thead>
+									    <tr>
+									      <th>#</th>
+		   							      <th>Materia</th>
+									      <th>Comentario</th>
+									    </tr>
+									  </thead>
+									  <tbody>
+									    	<?php
+									    	$i = 0;
+				                            foreach($consultaRegistro as $fila){
+				                            	$i++;
+				                                echo '<tr><td>'.$i.'</td>'."\n";
+												echo '<td>'.$fila['materia'].'</td>'."\n";
+												echo '<td>'.$fila['comentario'].'</td></tr>'."\n";
+				                            }
+				                            ?>
+									  </tbody>
+								  </table>
+								  </br></br></br>
 							</p>
 						</div>
                   </div>

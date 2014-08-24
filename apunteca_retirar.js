@@ -56,11 +56,11 @@ function compruebaExistencia(datos){
 		$('#alertaApunte').html('<div class="alert alert-danger">No existe un apunte con ese id</div>');
 		return;
 	}
-	else if(datos[1][0].estado_id==0){
+	else if(datos[1][0].estado_id==1){
 		$('#campo_apunte_id').addClass("has-success");
 		$('#alertaApunte').html('<div class="alert alert-success">Apunte disponible</div>');
 	}
-	else if(datos[1][0].estado_id==1){
+	else if(datos[1][0].estado_id==3){
 		$('#campo_apunte_id').addClass("has-warning");
 		$('#alertaApunte').html('<div class="alert alert-warning">El apunte tiene una reserva, mas detalles en:</br> [link a apunte perfil]"</div>');
 		return;

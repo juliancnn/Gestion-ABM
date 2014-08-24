@@ -25,13 +25,9 @@ else
 
 	</head>
 	<body>
-	<div class="container"  id="contenido">
-			<div class="row">
-				<br>
-			</div>
-			<div class="row center-block">
-				<div class="col-md-3"></div>
-				<div class="col-md-6">
+		<div class="container"  id="contenido">
+				<div class="col-md-12">
+					<div class="row center-block">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h5 class="panel-title" align="center">Hisorial de registro</h5>
@@ -73,10 +69,7 @@ else
 						</div>
 					</div>
 				</div>
-				<div class="col-md-3"></div>
 			</div>
-
-		</div>
-    
+		</div>    
 	</body>
 </html>

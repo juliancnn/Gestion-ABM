@@ -13,7 +13,7 @@ include_once('constantes.php');
         
         <title><?php echo TITULO; ?> - Iniciar Sesion</title>
         <script src="loggin.js"></script>
-
+        <link href="footer.css" rel="stylesheet">
 	</head>
 	<body>
 	<div class="container-fluid">    
@@ -40,6 +40,6 @@ include_once('constantes.php');
             <div class="col-sm-4"></div>
         </div>
 	</div>
-    
+    <?PHP echo PIEPAGINA; ?>
 	</body>
 </html>
